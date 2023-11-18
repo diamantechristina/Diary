@@ -6,19 +6,19 @@ import java.awt.event.MouseEvent;
 
 public class DiaryPanel extends JPanel{
     Color color = new Color(255,238,198);
-    CardLayout cardLayout = new CardLayout();
-    JPanel cardPanel = new JPanel(cardLayout);
-    final int WIDTH = 1000;
-    final int HEIGHT = 750;
+    final int WINDOW_WIDTH = 1000;
+    final int WINDOW_HEIGHT = 750;
     JPanel pane, pane1;
     JButton invisibleButton;
     Buttons[] button;
+    JPanel panelSettings;
+
 
     public DiaryPanel(){
         //this.setSize(new Dimension(1000,600));
-        this.setBounds(0,0,WIDTH,HEIGHT);
+        this.setBounds(0,0, WINDOW_WIDTH, WINDOW_HEIGHT);
         this.setBackground(color);
-        cardPanel.add(this);
+        this.add(new NewEntryGUI());
         //this.setLayout(new BorderLayout(100, BorderLayout.CENTER));
         //this.setLayout(new BorderLayout());
         Menu();
@@ -28,7 +28,7 @@ public class DiaryPanel extends JPanel{
         invisibleButton = new JButton();
         pane = new JPanel();
         pane1 = new JPanel();
-        pane.add(pane1);
+        //pane.add(pane1);
         invisibleButton.setPreferredSize(new Dimension(175,50));
         pane.add(invisibleButton);
         invisibleButton.setVisible(false);
@@ -41,27 +41,51 @@ public class DiaryPanel extends JPanel{
         }
         button[0].addMouseListener(new NewEntry());
         button[3].addMouseListener(new Quit());
-        pane1.setBounds(0,0,500,100);
-        pane1.setVisible(false);
-        pane.setLayout(new GridLayout(0,1,0,HEIGHT/17));
+        //pane1.setBounds(0,0,500,100);
+        //pane1.setVisible(false);
+        pane.setLayout(new GridLayout(0,1,0, WINDOW_HEIGHT /13));
         pane.setBackground(color);
 
         this.add(pane);
 
     }
-    class SettingsGUI extends JPanel{
-        public SettingsGUI(){
-            this.setBounds(0,0,WIDTH,HEIGHT);
-            this.setBackground(color);
+    class NewEntryGUI extends JPanel{
+        public NewEntryGUI(){
+            this.setBounds(0,0, WINDOW_WIDTH, WINDOW_HEIGHT);
+            this.setBackground(null);
+            bookBG();
         }
 
+        public void bookBG(){
+            panelSettings = new JPanel();
+            JButton invisibleButton = new JButton();
+            invisibleButton.setPreferredSize(new Dimension(175,50));
+            invisibleButton.setVisible(false);
+            panelSettings.setBackground(null);
+            panelSettings.setLayout(new GridLayout(1,1,(WINDOW_WIDTH *2)/3, WINDOW_HEIGHT /17));
 
-
+            Buttons menuButton = new Buttons("Back to Menu");
+            menuButton.addMouseListener(new MenuButton());
+            panelSettings.add(menuButton);
+            panelSettings.add(invisibleButton);
+            panelSettings.setVisible(false);
+            this.add(panelSettings);
+        }
+    }
+    class MenuButton extends MouseAdapter{
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            pane.setVisible(true);
+            panelSettings.setVisible(false);
+            repaint();
+        }
     }
     class NewEntry extends MouseAdapter{
         @Override
         public void mouseClicked(MouseEvent e) {
-            new SettingsGUI();
+           pane.setVisible(false);
+           panelSettings.setVisible(true);
+           repaint();
         }
     }
 
