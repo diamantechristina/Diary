@@ -62,7 +62,7 @@ public class DiaryPanel extends JPanel{
             invisibleButton.setPreferredSize(new Dimension(175,50));
             invisibleButton.setVisible(false);
             panelSettings.setBackground(null);
-            panelSettings.setLayout(new GridLayout(1,1,(WINDOW_WIDTH *2)/3, WINDOW_HEIGHT /17));
+            panelSettings.setLayout(new GridLayout(1,1,(WINDOW_WIDTH *3)/5, WINDOW_HEIGHT /17));
 
             Buttons menuButton = new Buttons("Back to Menu");
             menuButton.addMouseListener(new MenuButton());
